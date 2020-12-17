@@ -44,7 +44,11 @@ public class BotCommand extends Command {
     public void execute(String label, IArgConsumer args) throws CommandException {
         if (args.hasExactly(0)) {
             IConnectionResult result = UserManager.INSTANCE.connect(
-                    new Session("Bot" + System.currentTimeMillis() % 1000, UUID.randomUUID().toString(), "", ""));
+                    new Session(baritone.getPlayerContext().player().getName() + System.currentTimeMillis() % 1000, UUID.randomUUID().toString(), "", ""));
+            logDirect(result.toString());
+        }if (args.hasExactly(1)) {
+            IConnectionResult result = UserManager.INSTANCE.connect(
+                    new Session(args.get().getValue(), UUID.randomUUID().toString(), "", ""));
             logDirect(result.toString());
         } else if (args.hasExactly(2)) {
             Action action = Action.getByName(args.getString());
@@ -73,7 +77,7 @@ public class BotCommand extends Command {
 
     @Override
     public String getShortDesc() {
-        return "Set a goal to the axes";
+        return "Spawns a bot";
     }
 
     @Override
